@@ -1,0 +1,174 @@
+
+  <meta charset="UTF-8">
+  <title>RetroHub</title>
+  <link rel="stylesheet" href="style.css">
+
+body {
+  font-family: 'Press Start 2P', cursive;
+}
+body {
+  background-color: black;
+  color: #00ff00;
+  font-family: 'Press Start 2P', cursive; /* <-- название шрифта */
+  text-align: center;
+  padding: 50px;
+  font-size: 10px;
+}
+
+/* сканлинии */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 255, 0, 0.010) 0px,
+    rgba(0, 255, 0, 0.05) 2px,
+    transparent 5px,
+    transparent 7px
+  );
+  pointer-events: none; 
+    z-index: -1;
+}
+
+/* мерцание текста */
+@keyframes flicker {
+  0%   { opacity: 1; }
+  45%  { opacity: 0.9; }
+  50%  { opacity: 0.4; }
+  55%  { opacity: 0.9; }
+  100% { opacity: 1; }
+}
+
+h1, p {
+  animation: flicker 1.5s infinite;
+}
+
+/* Контент */
+.screen {
+  perspective: 500px;    
+  position: relative;
+  z-index: 1;
+position: relative; /* контейнер для абсолютных элементов */
+}
+.screen-inner {
+  transform: scaleX(1.3);
+  transform-origin: center top;
+}
+
+#terminal-info {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: #00ff00;
+  white-space: pre;
+  text-align: left;      /* выравнивание текста по левому краю */
+  margin-top: 40px;      /* отступ от ASCII-арта сверху */
+  margin-left: -29px;/* отступ слева */
+  line-height: 16px;
+}
+
+#command-line {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: #00ff00;
+  margin-top: 10px;
+  white-space: pre;
+  text-align: left;
+    margin-top: 10px;
+    margin-left: 0;
+}
+
+/* курсор по умолчанию (зелёный и мигает) */
+.cursor {
+  display: inline-block;
+  width: 10px;
+  color: #00ff00;
+  animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+
+#command-list {
+  position: absolute;
+  top: calc(220px + 0px); /* оставляем смещение от верха */
+  right: 30px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: #00ff00;
+  white-space: pre;
+  text-align: left;
+  line-height: 16px;
+  overflow-y: auto;
+  max-height: calc(100vh - 220px); /* не выходит за экран */
+}
+
+
+.terminal-output {
+    line-height: 13px;
+}
+
+html, body, * {
+    cursor: none !important; /* скрываем системный курсор */
+}
+
+#custom-cursor {
+    position: fixed;
+    width: 10px;
+    height: 16px;
+    background-color: #0f0; /* зеленый */
+    pointer-events: none;
+    z-index: 9999;
+
+    /* смешиваем цвет с текстом под ним */
+    mix-blend-mode: difference;
+}
+
+/* уменьшение текста на маленьких экранах */
+@media (max-width: 600px) {
+  #ascii-art {
+    font-size: 6px; /* уже есть */
+  }
+
+  #terminal-info,
+  #command-list {
+    font-size: 6px; /* уменьшаем инфо и список команд */
+  }
+
+  #command-line {
+    font-size: 6px; /* курсор и ввод */
+  }
+}
+
+/* Эффект старых пикселей */
+.old-screen::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="black"/><rect x="20" y="20" width="60" height="60" fill="%2300ff00" opacity="0.1"/></svg>');
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+/* Эффект магнитных полей */
+@keyframes magneticField {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.magnetic-field {
+  position: fixed;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, transparent 30%, rgba(0,255,0,0.02) 70%);
+  animation: magneticField 60s linear infinite;
+  pointer-events: none;
+  z-index: -3;
+}
+
